@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+</head>
+<body>
+	<button>test</button>
+	<script>
+	//range.js: 实现一个能表示值得范围类
+
+	// 返回一个新的"范围对象"
+	function range(from, to) {
+	  // 使用inherit()创建对象
+	  var r = inherit(range.methods);
+
+	  // 储存新的"范围"的起始位置和结束位置(状态)
+	  // 这两个属性是不可继承的,每个对象都拥有唯一的属性
+	  r.from = from;
+	  r.to = to;
+	  return r;
+	}
+
+	// 原型对象定义方法,这些方法为每个范围对象所继承
+	range.methods = {
+	  // 如果x在这个范围内,则返回true,否则返回false
+	  includes: function(x) {
+	    return this.from <= x && x < this.to;
+	  },
+
+	  // 范围内的每个整数都调用一次f,这个方法只可用作数字范围
+	  foreach: function(f) {
+	    for (var x = Math.ceil(this.from); x <= this.to; x++) f(x);
+	  },
+	  // 返回表示这个范围的字符串
+	  toString: function() {
+	    return "(" + this.from + "..." + this.to + ")";
+	  }
+	};
+
+	</script>
+</body>
+</html>
