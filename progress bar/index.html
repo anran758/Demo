@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>progress bar</title>
+	<style type="text/css">
+	body {
+		max-width: 1180px;
+		overflow: hidden;
+	}
+		.loading {
+			position: fixed;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			z-index: 100;
+			background: #fff;
+		}
+		.loading .pic {
+			position: absolute;
+			width: 160px;
+			height: 240px;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			margin: auto;
+			background: url('images/loading.gif');
+		}
+	</style>
+	<script src="Js/jquery-3.2.1.min.js" type="text/javascript"></script>
+	<script>
+		document.onreadystatechange = function() {
+			if(document.readyState == "complete") {
+					$(".loading").fadeOut();
+			}
+		};
+	</script>
+</head>
+<body>
+<div class="loading"><div class="pic"></div></div>
+
+	<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1499876462031&di=2882b8124c6d55f135eed0131f78a1c0&imgtype=0&src=http%3A%2F%2Fimg2.3lian.com%2F2014%2Ff5%2F54%2Fd%2F73.jpg">
+	<img src="https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3493638398,2544740951&fm=26&gp=0.jpg">
+	<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1499876484468&di=7fcba71980c68162269b2924251598fd&imgtype=0&src=http%3A%2F%2Fimg1.3lian.com%2F2015%2Fa1%2F107%2Fd%2F280.jpg">
+	<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1499880623632&di=4e62e40470f272bb832eae993fc22cd1&imgtype=0&src=http%3A%2F%2Fimg2.3lian.com%2F2014%2Ff4%2F79%2Fd%2F162.jpg">
+	<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1499880637105&di=50d25483bc0400816d02373d55cb463e&imgtype=0&src=http%3A%2F%2Fphotos.tuchong.com%2F33792%2Ff%2F855658.jpg">
+	<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1499880658968&di=0ea9b76463b998e988fbb813955eccc0&imgtype=0&src=http%3A%2F%2Fimg.pconline.com.cn%2Fimages%2Fupload%2Fupc%2Ftx%2Fitbbs%2F1309%2F22%2Fc31%2F26148344_1379857100072.jpg">
+</body>
+</html>
