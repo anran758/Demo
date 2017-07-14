@@ -7,14 +7,6 @@
 		img {
 			width: 100%;
 		}
-		.container {
-			width:800px;
-			padding: 20px;
-			margin: 0 auto;
-			text-align: center;
-			/* font-size: 0; */
-			/* overflow: hidden; */
-		}
 		.loading {
 			position: fixed;
 			width: 100%;
@@ -26,16 +18,80 @@
 		}
 		.loading .pic {
 			position: absolute;
-			width: 50px;
-			height: 50px;
+			width: 100px;
+			height: 100px;
 			top: 0;
 			bottom: 0;
 			left: 0;
 			right: 0;
 			margin: auto;
+			text-align: center;
+			line-height: 100px;
+			font-size: 26px;
+		}
+		.loading .pic span {
+			position: absolute;
+			display: block;
+			width: 80px;
+			height: 80px;
+			top: 10px;
+			left: 10px;
+			border-radius: 50%;
+			-webkit-box-shadow: 0 3px 0 #666;
+			        box-shadow: 0 3px 0 #666;
+			-webkit-animation: rotateRing 1s infinite linear;
+			        animation: rotateRing 1s infinite linear;
+		}
+
+		@-webkit-keyframes rotateRing {
+			0% {-webkit-transform: rotate(0deg);transform: rotate(0deg);}
+			100% {-webkit-transform: rotate(360deg);transform: rotate(360deg);}
+		}
+
+		@keyframes rotateRing {
+			0% {-webkit-transform: rotate(0deg);transform: rotate(0deg);}
+			100% {-webkit-transform: rotate(360deg);transform: rotate(360deg);}
 		}
 	</style>
+	<script src="Js/jquery-3.2.1.min.js" type="text/javascript"></script>
+	<script>
+		$(function(){
+			var img= $('img');
+			var num = 0;
+
+				img.each(function(i) {
+					// new object
+					var oImg = new Image();
+
+					oImg.onload = function() {
+						// 图片加载后'num + 1',再比对所有图片数量
+						num++;
+						if (num >= i) {
+							$('.loading').fadeOut();
+						}
+					};
+
+					// save the imgages of 'src' attribute
+					oImg.src = img[i].src;
+
+
+				})
+		});
+	</script>
 </head>
 <body>
+<div class="loading">
+	<div class="pic">
+		<span></span>
+		<b>0%</b>
+	</div>
+</div>
+
+	<img src="http://imglf2.ph.126.net/VqRb5rdIdF53my7beBQjNQ==/6630260724164386691.jpg">
+	<img src="http://imglf2.ph.126.net/WmE_SAU8MKdrtVx0oOVnew==/6630196952489975603.jpg">
+	<img src="http://imglf1.ph.126.net/Ym0BeIB6KB7N1V0HKaUYzQ==/6630701628327365716.jpg">
+	<img src="http://imglf2.ph.126.net/00KweYqblmz6QIvHa_B7zQ==/6630585080094812963.jpg">
+	<img src="http://imglf1.ph.126.net/I6r_Zq9nys5sacJbcAZ3aA==/6630204649071370003.jpg">
+	<img src="http://imglf1.ph.126.net/_mG28lMf8SFrBzgNFDC3LA==/6630125484234170722.jpg">
 </body>
 </html>
