@@ -64,9 +64,14 @@
 					var oImg = new Image();
 
 					oImg.onload = function() {
+						oImg.onload = null;
 						// 图片加载后'num + 1',再比对所有图片数量
 						num++;
-						if (num >= i) {
+
+						// 获取实时获取进度条数字,num/picNum
+						$('.loading b').html(parseInt(num / img.length * 100) + '%');
+
+						if (img.length == i +1) {
 							$('.loading').fadeOut();
 						}
 					};
@@ -75,7 +80,7 @@
 					oImg.src = img[i].src;
 
 
-				})
+				});
 		});
 	</script>
 </head>
