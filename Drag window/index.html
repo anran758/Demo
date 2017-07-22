@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Drag window</title>
+</head>
+<style>
+	body {
+		padding: 0;
+		margin: 0;
+		font-size: 12px;
+		font-family: "微软雅黑";
+		background: url('http://imglf2.ph.126.net/VqRb5rdIdF53my7beBQjNQ==/6630260724164386691.jpg') no-repeat top center /100%;
+	}
+	.dialog {
+		position: absolute;
+		width: 380px;
+		height: auto;
+		top: 100px;
+		left: 100px;
+		border: 1px solid #d5d5d5;
+		background: #fff;
+		z-index: 999;
+	}
+
+	/* Head title */
+	.dialog-tit {
+		height: 48px;
+		line-height: 48px;
+		padding-left: 20px;
+		color: #535353;
+		background: #f5f5f5;
+		border-bottom: 1px solid #efefef;
+		cursor: move;
+	}
+	.dialog-close {
+		position: absolute;
+		display: block;
+		top: 14px;
+		right: 20px;
+		width: 20px;
+		height: 20px;
+		background: url('images/close_def.png') no-repeat center;
+	}
+	.dialog-close {
+		background: url('images/close_hov.png') no-repeat center;
+	}
+	/* Dialog content */
+	.dialog-cont {
+		padding: 15px 20px;
+	}
+	.dialog-pt15{
+		padding-top: 15px;
+	}
+	.dialog-l40{
+		height: 40px;line-height: 40px;
+		text-align: right;
+	}
+	.dialog-input{
+		width: 100%;
+		height: 40px;
+		margin: 0px;
+		padding:0px 0px 0px 8px;
+		border: 1px solid #d5d5d5;
+		font-size: 16px;color: #c1c1c1;
+		text-indent: 25px;
+		outline: none;
+    box-sizing: border-box;
+	}
+	.dialog-input-username{
+		background: url(images/input_username.png) no-repeat 2px ;
+	}
+
+	.dialog-input-password{
+		background: url(images/input_password.png) no-repeat 2px ;
+	}
+	/* Submit bottom */
+	.dialog-submit{
+		width: 100%;height: 50px;background: #3b7ae3;border:none;font-size: 16px;color: #fff;
+		outline: none;text-decoration: none;
+		display: block;text-align: center;line-height: 50px;
+	}
+	.dialog-submit:hover{
+		background: #3f81b0;
+	}
+
+	.mask {
+		position: absolute;
+		display: none;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, .4);
+		z-index: 888;
+	}
+	.link {
+		padding-right: 40px;
+		text-align: right;
+		line-height: 20px;
+	}
+</style>
+<body>
+	<div class="dialog">
+		<div class="dialog-tit">
+			登录通行证
+			<a href="javascript:;" class="dialog-close"></a>
+		</div>
+		<!-- Contwnt -->
+		<div class="dialog-cont">
+			<div class="dialog-l40 dialog-pt15">
+				<input class="dialog-input dialog-input-username" type="input" placeholder="手机/邮箱/用户名" />
+			</div>
+			<div class="dialog-l40 dialog-pt15">
+				<input class="dialog-input dialog-input-password" type="input" placeholder="密码" />
+			</div>
+			<div class="dialog-l40">
+				<a href="javascript:;">忘记密码</a>
+			</div>
+			<div>
+				<a class="dialog-submit" href="javascript:;" >登录</a>
+			</div>
+			<div class="dialog-l40">
+				<a href="javascript:;">立即注册</a>
+			</div>
+		</div>
+		</div>
+	</div>
+	<div class="mask" id="misk"></div>
+	<div class="link">
+		<a href="javascript:;">登录</a>
+	</div>
+</body>
+</html>
