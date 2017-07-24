@@ -12,7 +12,12 @@
 		font-family: "微软雅黑";
 		background: url('http://imglf2.ph.126.net/VqRb5rdIdF53my7beBQjNQ==/6630260724164386691.jpg') no-repeat top center /100%;
 	}
+	a {
+		text-decoration: none;
+	}
+	/* reset end */
 	.dialog {
+		display: none;
 		position: absolute;
 		width: 380px;
 		height: auto;
@@ -22,7 +27,6 @@
 		background: #fff;
 		z-index: 999;
 	}
-
 	/* Head title */
 	.dialog-tit {
 		height: 48px;
@@ -89,6 +93,8 @@
 		display: none;
 		top: 0;
 		left: 0;
+		bottom: 0;
+		right: 0;
 		width: 100%;
 		height: 100%;
 		background: rgba(0, 0, 0, .4);
@@ -96,15 +102,20 @@
 	}
 	.link {
 		padding-right: 40px;
-		text-align: right;
+		margin-top: 10px;
 		line-height: 20px;
+		text-align: right;
+	}
+	.link > a {
+		font-size: 16px;
+		color: skyblue;
 	}
 </style>
 <body>
-	<div class="dialog">
-		<div class="dialog-tit">
+	<div class="dialog" id="dialog">
+		<div class="dialog-tit" id="dialogTit">
 			登录通行证
-			<a href="javascript:;" class="dialog-close"></a>
+			<a href="javascript: hideDiglog();" class="dialog-close"></a>
 		</div>
 		<!-- Contwnt -->
 		<div class="dialog-cont">
@@ -126,9 +137,112 @@
 		</div>
 		</div>
 	</div>
-	<div class="mask" id="misk"></div>
+	<div class="mask" id="mask"></div>
 	<div class="link">
-		<a href="javascript:;">登录</a>
+		<a href="javascript:showDiglog();">登录</a>
 	</div>
+
+	<script>
+		// Get id
+		function $(id) {
+			return document.getElementById(id);
+		}
+
+		// Dialog center
+		function autoCenter(el) {
+			var bodyW = document.documentElement.clientWidth;
+			var bodyH = document.documentElement.clientHeight;
+
+			// Offset of the dialog
+			var elW = el.offsetWidth;
+			var elH = el.offsetHeight;
+
+			// Calculate the center
+			el.style.left = (bodyW - elW) / 2 + 'px';
+			el.style.top  = (bodyH - elH) / 2 + 'px';
+		}
+
+		// Auto full screen cover
+		function fillToBody(el) {
+
+			el.style.width = document.documentElement.clientWidth + 'px';
+			el.style.height = document.documentElement.clientHeight + 'px';
+		}
+
+		// Drag moudule
+		function drag() {
+			var mouseOffsetX = 0, mouseOffsetY = 0;
+			var isDraging = false;
+
+			// Event 1: Mouse down
+			$('dialogTit').addEventListener('mousedown', function(e) {
+				var e = e || window.event;
+
+				// 鼠标事件当前按下去的坐标
+				mouseOffsetX = e.pageX - $('dialog').offsetLeft;
+				mouseOffsetY = e.pageY - $('dialog').offsetTop;
+				isDraging = true;
+			}, false);
+
+			// Event 2: Mouse move
+			document.onmousemove = function(e) {
+				var e = e || window.event;
+
+				// Current Mouse coordinates and
+				// new position of dialog
+				var mouseX = e.pageX;
+				var mouseY = e.pageY;
+				var moveX = 0;
+				var moveY = 0;
+
+				// If dialog can drag, calculate the new position
+				if (isDraging === true) {
+					moveX = mouseX - mouseOffsetX;
+					moveY = mouseY - mouseOffsetY;
+
+					// Range restrition, moveX > 0 && moveX < (Max page - dialog width)
+					// 									 moveY > 0 && moveY < (Max page - dialog height)
+					var pageWidth = document.documentElement.clientWidth;
+					var pageHeight = document.documentElement.clientHeight;
+
+					var dialogWidth  = $('dialog').offsetWidth;
+					var dialogHeight = $('dialog').offsetHeight;
+
+					var maxX = pageWidth - dialogWidth;
+					var maxY = pageHeight - dialogHeight;
+
+					// Math.max 保证是正数, Math.min 规定上限
+					moveX = Math.min(maxX, Math.max(0, moveX));
+					moveY = Math.min(maxY, Math.max(0, moveY));
+
+					$('dialog').style.left = moveX + 'px';
+					$('dialog').style.top  = moveY + 'px';
+				}
+			};
+
+			// Event 3: Release the mouse (isDraging = false)
+			document.onmouseup = function() {
+				isDraging = false;
+			};
+		}
+		drag();
+
+		function showDiglog() {
+			$('dialog').style.display = 'block';
+			$('mask').style.display = 'block';
+			autoCenter($('dialog'));
+			fillToBody($('mask'));
+		}
+
+		function hideDiglog() {
+			$('dialog').style.display = 'none';
+			$('mask').style.display = 'none';
+		}
+
+		window.onresize = function() {
+			autoCenter($('dialog'));
+			fillToBody($('mask'));
+		};
+	</script>
 </body>
 </html>
