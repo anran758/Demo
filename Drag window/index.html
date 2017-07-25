@@ -190,30 +190,28 @@
 
 				// Current Mouse coordinates and
 				// new position of dialog
-				var mouseX = e.pageX;
-				var mouseY = e.pageY;
-				var moveX = 0;
-				var moveY = 0;
+				var mouseX = e.pageX, mouseY = e.pageY,
+						moveX = 0, moveY = 0;
 
 				// If dialog can drag, calculate the new position
 				if (isDraging === true) {
 					moveX = mouseX - mouseOffsetX;
 					moveY = mouseY - mouseOffsetY;
 
-					// Range restrition, moveX > 0 && moveX < (Max page - dialog width)
-					// 									 moveY > 0 && moveY < (Max page - dialog height)
-					var pageWidth = document.documentElement.clientWidth;
-					var pageHeight = document.documentElement.clientHeight;
+						// Range restrition, moveX > 0 && moveX < (Max page - dialog width)
+						// 									 moveY > 0 && moveY < (Max page - dialog height)
+						var pageWidth = document.documentElement.clientWidth;
+						var pageHeight = document.documentElement.clientHeight;
 
-					var dialogWidth  = $('dialog').offsetWidth;
-					var dialogHeight = $('dialog').offsetHeight;
+						var dialogWidth  = $('dialog').offsetWidth;
+						var dialogHeight = $('dialog').offsetHeight;
 
-					var maxX = pageWidth - dialogWidth;
-					var maxY = pageHeight - dialogHeight;
+						var maxX = pageWidth - dialogWidth;
+						var maxY = pageHeight - dialogHeight;
 
-					// Math.max 保证是正数, Math.min 规定上限
-					moveX = Math.min(maxX, Math.max(0, moveX));
-					moveY = Math.min(maxY, Math.max(0, moveY));
+						// Math.max 保证是正数, Math.min 规定上限
+						moveX = Math.min(maxX, Math.max(0, moveX));
+						moveY = Math.min(maxY, Math.max(0, moveY));
 
 					$('dialog').style.left = moveX + 'px';
 					$('dialog').style.top  = moveY + 'px';

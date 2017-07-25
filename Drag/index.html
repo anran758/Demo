@@ -83,7 +83,6 @@
 			// 监听处理移动事件
 			moving = setInterval(onMove, 10);
 		}
-
 		function onMove() {
 			if (moving) {
 				// 鼠标当前页面的位置 - 最开始按下去的时候,
@@ -91,7 +90,24 @@
 				var to_x = m_to_x - m_start_x;
 				var to_y = m_to_y - m_start_y;
 
-				m_ctrl.style.left = to_x + 'px';
+				// ctrl 就是控制器, panel 就是面板
+				switch(m_type) {
+					case 'r':
+						m_ctrl.style.left = to_x + 'px';
+						m_panel.style.width = to_x + 10 + 'px';
+						break;
+					case 'b':
+						m_ctrl.style.top  = to_y + 'px';
+						m_panel.style.height = to_y + 10 + 'px';
+						break;
+					case 'rb':
+						m_ctrl.style.left = to_x + 'px';
+						m_ctrl.style.top  = to_y + 'px';
+						m_panel.style.width = to_x + 20 + 'px';
+						m_panel.style.height = to_y + 20 + 'px';
+						break;
+				}
+
 			}
 		}
 
@@ -108,6 +124,13 @@
 		document.onmouseup = function() {
 			clearInterval(moving);
 			moving = 0;
+			var cls = document.getElementsByClassName('ui-resizable-ctrl');
+
+			// 因为前面给面板设值也是通过'style',清空即复位.
+			for (var i = 0; i < cls.length; i++) {
+				cls[i].style.left = '';
+				cls[i].style.top = '';
+			}
 		};
 
 		// step 1
@@ -129,6 +152,12 @@
 			// 为控制元素设置拖拽处理
 			r.addEventListener('mousedown', function(e) {
 				onMousedown(e, panel, r, 'r');
+			});
+			b.addEventListener('mousedown', function(e) {
+				onMousedown(e, panel, b, 'b');
+			});
+			rb.addEventListener('mousedown', function(e) {
+				onMousedown(e, panel, rb, 'rb');
 			});
 		}
 
