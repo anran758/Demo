@@ -28,7 +28,6 @@
 			top: 0;
 			width: 10px;
 			height: 100%;
-			background-color: green;
 			cursor: e-resize;    /* East reside */
 		}
 		.ui-resizable-b {
@@ -37,7 +36,6 @@
 			bottom: 0;
 			width: 100%;
 			height: 10px;
-			background-color: blue;
 			cursor: s-resize;    /* South reside */
 		}
 		.ui-resizable-rb {
@@ -46,7 +44,6 @@
 			bottom: 0;
 			width: 20px;
 			height: 20px;
-			background-color: red;
 			cursor: nw-resize;    /* North West reside */
 		}
 
@@ -85,10 +82,16 @@
 		}
 		function onMove() {
 			if (moving) {
+				var min_left = m_panel.offsetLeft;
+				var min_top = m_panel.offsetTop;
+
 				// 鼠标当前页面的位置 - 最开始按下去的时候,
 				// 鼠标相对于控制元素的偏移.
 				var to_x = m_to_x - m_start_x;
 				var to_y = m_to_y - m_start_y;
+
+				to_x = Math.max(to_x, min_left);
+				to_y = Math.max(to_y, min_top);
 
 				// ctrl 就是控制器, panel 就是面板
 				switch(m_type) {
