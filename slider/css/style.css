@@ -30,7 +30,7 @@ body {
 
 .slider,
 .slider-main,
-.slider .slider-main-i {
+.slider-main .main-i {
 	position: relative;
 	width: 100%;
 	height: 400px;
@@ -40,30 +40,27 @@ body {
 	overflow: hidden;
 }
 
-.slider .slider-main-i {
-
-}
-.slider .slider-main-i img {
+.slider-main .main-i img {
 	position: absolute;
 	left: 0;
 	top: 0;
 	width: 100%;
 }
-.slider .slider-main-i .slider-caption {
+.slider-main .main-i .slider-caption {
 	position: absolute;
 	right: 50%;
 	top: 30%;
 	z-index: 9;
 }
 
-.slider .slider-main-i h2 {
+.slider-main .main-i h2 {
 	font-size: 40px;
 	line-height: 50px;
 	color: #b5b5b5;
 	text-align: right;
 }
 
-.slider .slider-main-i h3 {
+.slider-main .main-i h3 {
 	font-size: 70px;
 	line-height: 70px;
 	color: #000;
@@ -117,10 +114,46 @@ body {
 	opacity: 1;
 }
 
-.slider .active,
-.slider .active:hover {
+.slider .slider-ctrl .active,
+.slider .slider-ctrl .active:hover {
 	background-color: #000;
 }
-.slider .active:hover img {
+.slider .slider-ctrl .active:hover img {
 	opacity: 0;
+}
+
+/* slider transiton */
+.slider-main .main-i {
+	opacity: 0;
+	position: absolute;
+	right: 50%;
+	top: 0;
+	-webkit-transition: all .8s;
+		 -o-transition: all .8s;
+       	transition: all .8s;
+}
+
+.slider-main .main-i h2 {
+	margin-right: 45px;
+}
+
+.slider-main .main-i h3 {
+	margin-right: -45px;
+}
+
+.slider-main .main-i h2,
+.slider-main .main-i h3 {
+	-webkit-transition: all .8s;
+			 -o-transition: all .8s;
+         	transition: all .8s;
+}
+
+.slider-main .active {
+	opacity: 1;
+	right: 0;
+}
+
+.slider-main .active h2,
+.slider-main .active h3 {
+	margin-right: 0;
 }
