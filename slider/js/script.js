@@ -32,7 +32,8 @@ function addSliders() {
 		var _html_main = tpl_main
 											.replace(/{{index}}/g, data[i].img)
 											.replace(/{{h2}}/g, data[i].h2)
-											.replace(/{{h3}}/g, data[i].h3);
+											.replace(/{{h3}}/g, data[i].h3)
+											.replace(/{{css}}/g, ['', 'main-i-right'][i % 2]);
 		var _html_ctrl = tpl_ctrl
 											.replace(/{{index}}/g, data[i].img);
 
@@ -43,6 +44,13 @@ function addSliders() {
 	// 把 HTML 回写到对应的 DOM 里面
 	$('template_main').innerHTML = out_main.join('');
 	$('template_ctrl').innerHTML = out_ctrl.join('');
+
+	// add main background, replace id
+	$('template_main').innerHTML += tpl_main
+											.replace(/{{index}}/g, 'background')
+											.replace(/{{h2}}/g, data[i].h2)
+											.replace(/{{h3}}/g, data[i].h3);
+  $('main_background').className += ' main-backg';
 }
 
 // Slider switch
@@ -61,9 +69,25 @@ function switchSlider(n) {
 	}
 	main.className += ' active';
 	ctrl.className += ' active';
+
+	// 切换时,复制上一张
+	setTimeout(function() {
+		$('main_background').innerHTML = main.innerHTML;
+	}, 1000);
+}
+
+function movePic() {
+	var pic = $('.picture');
+
+	for (var i = 0; i < pic.length; i ++) {
+		pic[i].style.marginTop = (-1 * pic[i].clientHeight / 2) + 'px';
+	}
 }
 
 window.onload = function() {
 	addSliders();
 	switchSlider(1);
+	setTimeout(function() {
+		movePic();
+	}, 100);
 };
