@@ -1,3 +1,6 @@
+.toolbar-layer, .toolbar-item {
+  background: url(../images/toolbar.png) no-repeat; }
+
 .toolbar {
   position: fixed;
   left: 50%;
@@ -9,7 +12,6 @@
   display: block;
   width: 52px;
   height: 52px;
-  background: url(../images/toolbar.png) no-repeat;
   margin-top: 1px;
   transition: background 1s; }
   .toolbar-item:hover .toolbar-layer {
@@ -48,7 +50,6 @@
   right: 46px;
   bottom: -10px;
   width: 172px;
-  background: url(../images/toolbar.png) no-repeat;
   opacity: 0;
   filter: alpha(opacity=0);
   transform-origin: 95% 95%;

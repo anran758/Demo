@@ -1,5 +1,7 @@
 $toolbar-size: 52px;
-
+.toolbar-layer, .toolbar-item {
+  background: url(../images/toolbar.png) no-repeat;
+}
 .toolbar {
   position: fixed;
   left: 50%;
@@ -11,7 +13,6 @@ $toolbar-size: 52px;
   display: block;
   width: $toolbar-size;
   height: $toolbar-size;
-  background: url(../images/toolbar.png) no-repeat;
   margin-top: 1px;
   transition: background 1s;
 
@@ -66,7 +67,6 @@ $toolbar-size: 52px;
   right: $toolbar-size - 6;
   bottom: -10px;
   width: 172px;
-  background: url(../images/toolbar.png) no-repeat;
   opacity: 0;
   filter: alpha(opacity=0);
   transform-origin: 95% 95%;
