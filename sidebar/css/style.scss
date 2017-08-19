@@ -1,3 +1,11 @@
+@mixin toolbar-item($pos, $hoverPos) {
+  background-position: 0 $pos;
+
+    &:hover {
+       background-position: 0 $hoverPos;
+    }
+}
+
 $toolbar-size: 52px;
 .toolbar-layer, .toolbar-item {
   background: url(../images/toolbar.png) no-repeat;
@@ -30,6 +38,7 @@ $toolbar-size: 52px;
     &:hover {
        background-position: 0 -860px;
     }
+    @include toolbar-item(-798px, -860px);
 
     .toolbar-layer {
       height: 212px;
