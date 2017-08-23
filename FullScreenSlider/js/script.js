@@ -1,4 +1,6 @@
 (function($) {
+  "use strict";
+
   var PageSwitch = (function() {
     function PageSwitch(element, options) {
       // 从这里传入 default 默认值.
@@ -46,6 +48,25 @@
         return this.direction ? this.element.height() :
                                 this.element.width();
       },
+      /* 页面滑动 */
+      prev: function() {
+        var me = this;
+        if(me.index > 0) {
+          me.index--;
+        } else if (me.settings.loop) {
+          me.index = me.pagesCount - 1;
+        }
+        me._scrollPage();
+      },
+      next: function() {
+        var me = this;
+        if (me.index < me.pagesCount) {
+          me.index++;
+        } else if (me.settings.loop) {
+          me.index = 0;
+        }
+        me._scrollPage();
+      },
 
       /* 针对横屏情况进行布局 */
       _initLayout : function() {
@@ -80,7 +101,67 @@
           page.addClass('horizontal');
         }
       },
-      _initEvent : function() {}
+      _initEvent : function() {
+        var me = this;
+
+        me.element.on('click', me.selectors.pages + " li", function() {
+          me.index = $(this).index();
+          me._scrollPage();
+        });
+
+        /* 鼠标事件 */
+        me.element.on('mousewheel DOMMouseScroll', function(e) {
+          // 储存每次滚动的方向值并兼容火狐
+          var delta = e.originalEvent.wheelDelta ||
+                      -e.originalEvent.datail;
+
+          if (delta > 0 && (me.index && !me.settings.loop || me.settings.loop)) {
+            me.prev();
+          } else if (delta < 0 && (me.index < (me.pagesCount - 1) &&
+                    !me.settings.loop || me.settings.loop)) {
+            me.next();
+          }
+        });
+
+        /* 键盘事件 */
+        if (me.settings.keyboard) {
+          $(window).on("keydown", function(e) {
+            var keyCode = e.keyCode;
+
+            // Determine the direction key
+            if (keyCode == 37 || keyCode == 38) {
+              me.prev();
+            } else if (keyCode == 39 || keyCode == 40) {
+              me.next();
+            }
+          });
+        }
+
+        // 窗口变动事件
+        $(window).resize(function() {
+          var currentLength = me.switchLength(),
+              // 获取当前页面相对于文档的坐标值
+              offset = me.settings.direction ?
+                       me.section.eq(me.index).offset().top :
+                       me.section.eq(me.index).offset().left;
+
+          if (Math.abs(offset) > currentLength / 2 &&
+             me.index < (me.pagesCount - 1)) {
+            me.index ++;
+          }
+
+          // me.index不为 0 的话
+          if (me.index) {
+            me._scrollPage();
+          }
+        });
+
+        me.sections.on('transtionend webkitTranstionEnd oTransitionEnd otransitionend', function() {
+          if(me.settings.callback && $.type(me.settings.callback) == "function") {
+            me.settings.callback();
+          }
+        })
+      }
     };
 
     return PageSwitch;
