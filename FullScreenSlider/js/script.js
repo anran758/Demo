@@ -42,15 +42,14 @@
       /* 初始化dom结构, 布局, 分页及绑定事件 */
       init : function() {
         var me = this;
-
-        // 获取字符串
         console.log(me);
-        me.selectors = me.settings.selectors;
-        me.sections = me.element.find(me.selectors.sections);
-        me.section = me.sections.find(me.selectors.section);
 
-        me.direction = me.sections.direction ==
-                       'vertical' ? true : false;
+        // 获取获取节点
+        me.selectors = me.settings.selectors;
+        me.sections  = me.element.find(me.selectors.sections);
+        me.section   = me.sections.find(me.selectors.section);
+
+        me.direction  = me.settings.direction == 'vertical' ? true : false;
         me.pagesCount = me.pagesCount();
         me.index = (me.settings.index >= 0 &&
                     me.settings.index < me.pagesCount) ?
@@ -75,14 +74,14 @@
       },
       /* 获取页面的宽或高度(横 / 竖屏滑动) */
       switchLength : function() {
-        return this.direction ? this.element.height() :
-                                this.element.width();
+        return this.direction == 1 ? this.element.height() :
+                                     this.element.width();
       },
       /* 页面滑动 */
       prev: function() {
         var me = this;
         if(me.index > 0) {
-          me.index--;
+          me.index --;
         } else if (me.settings.loop) {
           me.index = me.pagesCount - 1;
         }
@@ -131,9 +130,9 @@
 
         // 判断横竖屏
         if (me.direction) {
-          page.addClass('vertical');
+          pages.addClass('vertical');
         } else {
-          page.addClass('horizontal');
+          pages.addClass('horizontal');
         }
       },
       _initEvent : function() {
@@ -142,8 +141,9 @@
         /* 鼠标滚轮事件 */
         me.element.on('mousewheel DOMMouseScroll', function(e) {
           e.preventDefault();
-            var delta = e.originalEvent.wheelDelta ||
-                        -e.originalEvent.datail;
+
+          var delta = e.originalEvent.wheelDelta ||
+                      -e.originalEvent.detail;
 
           if(me.canscroll) {
             if (delta > 0 && (me.index && !me.settings.loop || me.settings.loop)) {
@@ -156,7 +156,7 @@
         });
 
         /* 分页点击事件 */
-        me.element.on('click', me.selectors.pages + " li", function() {
+        me.element.on('click', me.selectors.page + " li", function() {
           me.index = $(this).index();
           me._scrollPage();
         });
@@ -176,63 +176,65 @@
         }
 
         // 窗口变动事件
+        var resizeId;
         $(window).resize(function() {
-          var currentLength = me.switchLength(),
-              // 获取当前页面相对于文档的坐标值
-              offset = me.settings.direction ?
-                       me.section.eq(me.index).offset().top :
-                       me.section.eq(me.index).offset().left;
+          clearTimeout(resizeId);
+          resizeId = setTimeout(function() {
+            var currentLength = me.switchLength(),
+                // 获取当前页面相对于文档的坐标值
+                offset = me.settings.direction ?
+                         me.section.eq(me.index).offset().top :
+                         me.section.eq(me.index).offset().left;
 
-          if (Math.abs(offset) > currentLength / 2 &&
-             me.index < (me.pagesCount - 1)) {
-            me.index ++;
-          }
+            if (Math.abs(offset) > currentLength / 2 &&
+               me.index < (me.pagesCount - 1)) {
+              me.index ++;
+            }
 
-          // me.index不为 0 的话
-          if (me.index) {
-            me._scrollPage();
-          }
+            // me.index不为 0 的话
+            if (me.index) {
+              me._scrollPage();
+            }
+        }, 500);
         });
 
         // 监听 Transiton
-        me.sections.on('transtionend webkitTranstionEnd oTransitionEnd otransitionend', function() {
-          me.canScroll = true;
-          // 用户自定义回调函数, 判断类型为函数, 否则为无效参数
-          if(me.settings.callback && $.type(me.settings.callback) == "function") {
-            me.settings.callback();
-          }
-        });
-      },
-      _scrollPage: function() {
-        var me = this,
-            dest = me.section.eq(me.index).position();
-
-        if(!dest) {
-          return;
-        }
-        me.canScroll = false;
-
-        // 动态添加 CSS3 属性
-        if (_prefix) {
-          me.sections.css(_prefix + "transtion", "all" + me.settings.duration +
-                          " ms" + me.settings.easing);
-          var translate = me.direction ? "translateY(-" + dest.top  + "px":
-                                         "translateX(-" + dest.left + "px";
-          me.sections.css(_prefix + "transform" + translate);
-        } else {
-          // 没有CSS3的浏览器, 使用 animate
-          var animateCss = me.direction ? {top : -dest.top} : {left : -dest.left};
-
-          me.sections.animate(animateCss. me.settings.duration, function() {
-            me.canScroll = true;
+        if(_prefix){
+          me.sections.on('transitionend webkitTransitionEnd oTransitionEnd otransitionend', function() {
+            me.canscroll = true;
+            // 用户自定义回调函数, 判断类型为函数, 否则为无效参数
             if(me.settings.callback && $.type(me.settings.callback) == "function") {
               me.settings.callback();
             }
           });
         }
+      },
+      _scrollPage: function(init) {
+        var me = this,
+            dest = me.section.eq(me.index).position();
+        if(!dest) return;
 
-        if (me.settings.pagination) {
-          me.pageItem.eq(me.index).addClass(me.ativeClass).siblings("li").removerclass(me.activeClass);
+        me.canscroll = false;
+        // 动态添加 CSS3 属性
+        if (_prefix) {
+          var translate = me.direction ? "translateY(-" + dest.top  + "px)":
+                                         "translateX(-" + dest.left + "px)";
+          me.sections.css(_prefix + "transition", "all " + me.settings.duration +
+                          "ms " + me.settings.easing);
+          me.sections.css(_prefix + "transform", translate);
+        } else {
+          // 没有CSS3的浏览器, 使用 animate
+          var animateCss = me.direction ? {top : -dest.top} : {left : -dest.left};
+          me.sections.animate(animateCss. me.settings.duration, function() {
+            me.canscroll = true;
+
+            if(me.settings.callback) {
+              me.settings.callback();
+            }
+          });
+        }
+        if (me.settings.pagination && !init) {
+          me.pageItem.eq(me.index).addClass(me.activeClass).siblings("li").removeClass(me.activeClass);
         }
       }
     };
