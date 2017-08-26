@@ -1,11 +1,84 @@
 (function($) {
-	var dog = {
-		$: function(id) {
-			return documemt.querySelector(id);
-		}
+	var dataInt = {
+		"data" : [
+			{'src': "01.jpg"},
+			{'src': "02.jpg"},
+			{'src': "03.jpg"},
+			{'src': "04.jpg"},
+			{'src': "05.jpg"},
+			{'src': "06.jpg"}
+		]
 	};
 
-	waterfall("waterfall", ".box");
+	Ajax('GET', 'js/script.js' ,dataInt , function(data) {
+		console.log(data)
+	})
+
+	function Ajax(type, url, data, success, failed) {
+		var xhr = null;
+		if(window.XMLHttpRequest) {
+			xhr = new XMLHttpRequest();
+		} else {
+			// IE6
+			xhr = new ActiveXObject('Microsoft.XMLHTTP');
+		}
+		var type =  type.toUpperCase();
+		var random = Math.random();
+
+		// 进行转码
+		if (typeof data == 'object') {
+			var str = '';
+			for (var key in data) {
+				str += key + "=" + '&';
+			}
+			data = str.replace(/&$/,'');
+		}
+
+		if(type == 'GET') {
+			if(data) {
+				xhr.open('GET', url + "?" + data, true);
+			} else {
+				xhr.open('GET', url + "?t=" + data, true);
+			}
+			xhr.send();
+		} else if (type == 'POST') {
+			xhr.open('POST', url, true);
+			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xhr.send(data);
+		}
+
+		// 处理返回的数据
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4) {
+				if (xhr.staus == 200) {
+					success(xhr.responseText);
+				} else {
+					if (failed) {
+						failed(xhr.status);
+					}
+				}
+			}
+		}
+	}
+
+	window.onscroll = function() {
+		if(checkScrollSlide()) {
+			var parent = document.getElementById("waterfall");
+			for (var i = 0; i < dataInt.data.length; i ++) {
+				var son = document.createElement('div');
+				var sonPic = document.createElement('div');
+				var sonImg = document.createElement('img');
+
+				son.className = "box";
+				sonPic.className = "pic";
+				sonImg.src = "images/" + dataInt.data[i].src;
+				parent.appendChild(son);
+				son.appendChild(sonPic);
+				sonPic.appendChild(sonImg);
+			}
+			waterfall("waterfall", ".box");
+		}
+	};
 
 	function waterfall(parent, box) {
 		var container = document.getElementById(parent);
@@ -38,6 +111,20 @@
 				arrHei[index] += sons[i].offsetHeight;
 			}
 		}
-				console.log(arrHei);
 	}
+
+	// 检测是否具备滚动加载数据块的条件
+	function checkScrollSlide() {
+		var container = document.getElementById('waterfall');
+		var sons = document.querySelectorAll(".box");
+
+		// 最后一个盒子相对于 top 的偏移量再加上自身一半的高度.
+		var lastBoxH = sons[sons.length - 1].offsetTop +
+		              Math.floor(sons[sons.length - 1].offsetHeight / 2);
+	  var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+	  var pageHeight = document.body.clientHeight || document.documentElement.clientHeight;
+
+	  return (lastBoxH < scrollTop + pageHeight) ? true : false;
+	}
+
 })();
