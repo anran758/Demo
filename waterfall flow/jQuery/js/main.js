@@ -1,5 +1,23 @@
 (function($) {
 	waterfall();
+	$(window).on('scroll resize', function() {
+		if(checkScrollSlide()) {
+			$.ajax({
+				url : "/js/images.json",
+				type : "GET",
+				dataType : "json",
+				success : function(data) {
+						$.each(data.data, function(key, value) {
+							// 创建DOM节点
+							var box = $('<div>').addClass('box').appendTo($('#waterfall'));
+							var pic = $('<div>').addClass('pic').appendTo($(box));
+							var img = $('<img>').attr('src', 'images/' + $(value).attr('src')).appendTo($(pic));
+						});
+				}
+			});
+		}
+		waterfall();
+	});
 
 	function waterfall() {
 		var $boxs = $('#waterfall > div');
@@ -15,6 +33,8 @@
 			} else {
 				var minHei = Math.min.apply(null, arrHei);
 				var minIndex = $.inArray(minHei, arrHei);
+
+				// 每个遍历的节点都添加css属性
 				$(value).css({
 					'position' : 'absolute',
 					'top': minHei + 'px',
@@ -23,7 +43,17 @@
 				arrHei[minIndex] += $boxs.eq(index).outerHeight();
 			}
 		});
-		console.log(arrHei)
+	}
 
+	// 数据块加载的条件
+	function checkScrollSlide() {
+		// 获取最后一个节点
+		var $lastBox = $('#waterfall > div').last();
+
+		// $lastBox.offset().top 只是相对最后一个节点向上的偏移量 再加上自身高度的一半
+		var lastBoxDis  = $lastBox.offset().top + Math.floor($lastBox.outerHeight() / 2);
+		var scrollTop   = $(window).scrollTop();
+		var documentHei = $(window).height();
+		return (lastBoxDis < scrollTop + documentHei) ? true : false;
 	}
 })(jQuery);
