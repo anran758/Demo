@@ -3,7 +3,7 @@
 	$(window).on('scroll resize', function() {
 		if(checkScrollSlide()) {
 			$.ajax({
-				url : "/js/images.json",
+				url : "js/images.json",
 				type : "GET",
 				dataType : "json",
 				success : function(data) {
