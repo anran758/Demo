@@ -24,16 +24,19 @@ a {
   text-decoration: none;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   overflow: hidden;
 }
 
 body {
-  font: 14px/1.6 Monda, PingFang SC, Microsoft YaHei, sans-serif;
+  font: 22px/1.6 Monda, PingFang SC, Microsoft YaHei, sans-serif;
 }
 
-.container, .sections, .section {
+.container,
+.sections,
+.section {
   position: relative;
   height: 100%;
 }
@@ -41,7 +44,6 @@ body {
   position: absolute;
   top: 50%;
   width: 100%;
-  -webkit-transform: translateY(-50%);
   transform: translateY(-50%);
   text-align: center;
 }
@@ -50,27 +52,28 @@ body {
 .section-2,
 .section-3,
 .section-4 {
-  background-color: #000;
+  background-color: #e0e0e0;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  color: white;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .section-1 {
-  background-image: url(../images/1.png);
+  background-image: url('../../../images/1.png');
 }
 
 .section-2 {
-  background-image: url(../images/2.jpg);
+  background-image: url('../../../images/2.png');
 }
 
 .section-3 {
-  background-image: url(../images/3.jpg);
+  background-image: url('../../../images/3.png');
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .section-4 {
-  background-image: url(../images/4.jpg);
+  background-image: url('../../../images/4.png');
 }
 
 .left {
@@ -78,8 +81,8 @@ body {
   width: 25%;
 }
 
-.container .pages{
-  position:fixed;
+.container .pages {
+  position: fixed;
   list-style: none;
 }
 
@@ -95,12 +98,12 @@ body {
 .container .pages .active {
   width: 14px;
   height: 14px;
-  border: 2px solid #FFFE00;
+  border: 2px solid #fffe00;
   background: none;
   margin-left: 0;
 }
 
-.container .vertical{
+.container .vertical {
   right: 10px;
   top: 50%;
 }
@@ -110,7 +113,7 @@ body {
   bottom: 10px;
 }
 
-.container .horizontal li{
+.container .horizontal li {
   display: inline-block;
   vertical-align: middle;
 }
