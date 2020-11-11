@@ -4,21 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>canvas-clock</title>
   <style>
-    div {
-      text-align: center;
-      margin-top: 250px;
+    html,
+    body {
+      height: 100%;
+      margin: 0;
     }
-    #clock {
-      border: 1px solid #ccc;
+
+    .container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   </style>
 </head>
 <body>
-  <div>
+  <section class="container">
     <canvas id="clock" width="300" height="300"></canvas>
-  </div>
+  </section>
 
   <script src="./clock.js"></script>
 </body>
