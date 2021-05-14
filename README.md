@@ -1,8 +1,10 @@
 # README
 
-早期用于练习或学习其底层原理的 dome 库。
+早期用于练习 API 或学习某些功能底层原理的 dome 库。
 
-## TODO
+``` shell
+yarn start
 
-- [ ] 引入 webpack 管理 Demo 资源
-- [ ] 优化原有代码
+# or
+npm run start
+```
