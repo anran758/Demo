@@ -1,0 +1,22 @@
+{
+  "name": "demos",
+  "version": "1.0.0",
+  "description": "web demo display library",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anran758/demos.git"
+  },
+  "keywords": [
+    "javascript"
+  ],
+  "author": "anran758",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anran758/demos/issues"
+  },
+  "homepage": "https://github.com/anran758/demos#readme"
+}

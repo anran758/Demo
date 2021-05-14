@@ -38,14 +38,14 @@ window.onload = function () {
  * 获取距离倒计时还有多少秒
  * @returns {String} 返回一个秒数
  */
-function getCurrentShowTimeSeconds () {
+function getCurrentShowTimeSeconds() {
   var curTime = new Date()
   var ret = curTime.getHours() * 3600 + curTime.getMinutes() * 60 + curTime.getSeconds()
 
   return ret
 }
 
-function update () {
+function update() {
   var nextTime = getCurrentShowTimeSeconds();
 
   // 下一次的时间
@@ -90,7 +90,7 @@ function update () {
 }
 
 // 更新小球
-function updateBalls () {
+function updateBalls() {
   for (var i = 0; i < balls.length; i++) {
     balls[i].x += balls[i].vx
     balls[i].y += balls[i].vy
@@ -117,7 +117,7 @@ function updateBalls () {
 }
 
 // 添加小球
-function addBalls (x, y, num) {
+function addBalls(x, y, num) {
   for (var i = 0; i < digit[num].length; i++) {
     for (var j = 0; j < digit[num][i].length; j++) {
       if (digit[num][i][j] === 1) {
@@ -138,7 +138,7 @@ function addBalls (x, y, num) {
   }
 }
 
-function render (ctx) {
+function render(ctx) {
   ctx.clearRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT)
 
   var hours = parseInt(curShowTimeSeconds / 3600, 10)
@@ -165,7 +165,7 @@ function render (ctx) {
   }
 }
 
-function renderDigit (x, y, num, ctx) {
+function renderDigit(x, y, num, ctx) {
   ctx.fillStyle = 'rgb(0, 102, 153)'
 
   for (var i = 0; i < digit[num].length; i++) {

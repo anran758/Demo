@@ -8,12 +8,12 @@ var rem = width / 200
 /**
  * 绘制背景
  */
-function drawBackground () {
+function drawBackground() {
   ctx.save()
   ctx.translate(r, r)
   ctx.beginPath();
   ctx.lineWidth = 10 * rem;
-  ctx.arc(0, 0, r - ctx.lineWidth/2, 0, 2 * Math.PI, false)
+  ctx.arc(0, 0, r - ctx.lineWidth / 2, 0, 2 * Math.PI, false)
   ctx.stroke()
 
   // 绘制时钟数字
@@ -52,7 +52,7 @@ function drawBackground () {
  * @param {Date} hour - 小时
  * @param {Date} minute - 分钟
  */
-function drawHour (hour, minute) {
+function drawHour(hour, minute) {
   ctx.save()
   ctx.beginPath();
   var red = 2 * Math.PI / 12 * hour
@@ -71,7 +71,7 @@ function drawHour (hour, minute) {
  * 绘制分钟针
  * @param {Date} minute - 分钟 
  */
-function drawMinute (minute) {
+function drawMinute(minute) {
   ctx.save()
   ctx.beginPath();
   var red = 2 * Math.PI / 60 * minute
@@ -90,7 +90,7 @@ function drawMinute (minute) {
  * 绘制秒针
  * @param {Date} sencond - 当前多少秒
  */
-function drawSecond (sencond) {
+function drawSecond(sencond) {
   ctx.save()
   ctx.beginPath();
   ctx.fillStyle = '#c14543'
@@ -107,7 +107,7 @@ function drawSecond (sencond) {
 /**
  * 绘制时钟圆点
  */
-function drawDot () {
+function drawDot() {
   ctx.beginPath();
   ctx.fillStyle = '#fff'
   ctx.arc(0, 0, 3 * rem, 0, 2 * Math.PI, false)
@@ -118,7 +118,7 @@ function drawDot () {
 /**
  * 绘制时钟
  */
-function draw () {
+function draw() {
   ctx.clearRect(0, 0, width, height)
   var now = new Date()
   var hour = now.getHours()
