@@ -3,7 +3,7 @@
   $(window).on('scroll resize', function () {
     if (checkScrollSlide()) {
       $.ajax({
-        url: "js/_images.json",
+        url: "js/images.json",
         type: "GET",
         dataType: "json",
         success: function (data) {
@@ -11,7 +11,7 @@
             // 创建DOM节点
             var box = $('<div>').addClass('box').appendTo($('#waterfall'));
             var pic = $('<div>').addClass('pic').appendTo($(box));
-            var img = $('<img>').attr('src', '_images/' + $(value).attr('src')).appendTo($(pic));
+            var img = $('<img>').attr('src', 'images/' + $(value).attr('src')).appendTo($(pic));
           });
         }
       });
